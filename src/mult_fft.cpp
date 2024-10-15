@@ -52,38 +52,6 @@ void PolyMulFFT(std::array<uint32_t, N_FFT>& res, const std::array<uint32_t,N_FF
     TwistFFT(res, ffta);
 }
 
-void PolyMulNaive(std::array<uint64_t, N_FFT> &res, const std::array<uint64_t, N_FFT>  &a,
-                            const std::array<uint64_t, N_FFT>  &b)
-{
-    uint64_t length = a.size();
-    for (int i = 0; i < length; i++) {
-        uint64_t ri = 0;
-        for (int j = 0; j <= i; j++)
-            ri += static_cast<typename std::make_signed<uint64_t>::type>(
-                          a[j]) *
-                  b[i - j];
-        for (int j = i + 1; j < length; j++)
-            ri -= static_cast<typename std::make_signed<uint64_t>::type>(
-                          a[j]) *
-                  b[length + i - j];
-        res[i] = ri;
-    }
-}
 
-void PolyMulNaive(std::array<uint32_t, N_FFT> &res, const std::array<uint32_t, N_FFT>  &a,
-                     const std::array<uint32_t, N_FFT>  &b)
-{
-    uint64_t length = a.size();
-    for (int i = 0; i < length; i++) {
-        uint64_t ri = 0;
-        for (int j = 0; j <= i; j++)
-            ri += static_cast<typename std::make_signed<uint32_t>::type>(
-                          a[j]) *
-                  b[i - j];
-        for (int j = i + 1; j < length; j++)
-            ri -= static_cast<typename std::make_signed<uint32_t>::type>(
-                          a[j]) *
-                  b[length + i - j];
-        res[i] = ri;
-    }
-}
+
+

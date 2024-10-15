@@ -10,7 +10,7 @@ void test_mult_fft(const std::array<uint64_t, N_FFT_TEST>& p1, const std::array<
     print_results<uint64_t>("Input p1", p1.data(), p1.size());
     print_results<uint64_t>("Input p2", p2.data(), p1.size());
     std::array<uint64_t, N_FFT_TEST> result = {0,0,0,0};
-    PolyMulNaive(result, p1, p2);
+    PolyMulNaive<uint64_t, N_FFT_TEST>(result, p1, p2);
     print_results<int64_t>(string_msg,  reinterpret_cast<int64_t*>(result.data()), result.size());
 
 

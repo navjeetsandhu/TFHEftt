@@ -1,5 +1,6 @@
 #include "mult_fft.hpp"
 #include"utils.hpp"
+#include <numeric>
 
 
 template <int N>
@@ -42,14 +43,15 @@ template <class P, int N>
 void test_mult_fft()
 {
     // make sure set N_FFT to 16 before testing
-    std::array<P,  N> p1 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
-    std::array<P,  N> p2 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 20, 21, 22, 23, 24, 25, 26};
+    std::array<P,  N> p1{};
+    std::array<P,  N> p2{};
+    std::iota(p1.begin(), p1.end(), 1);
+    std::iota(p2.begin(), p2.end(), 10);
     test_mult_fft<N>(p1, p2);
 }
 
 int main()
 {
-    // make sure set N_FFT to 16 before testing
     test_mult_fft<uint32_t, N_FFT>();
     test_mult_fft<uint64_t, N_FFT>();
     return 0;

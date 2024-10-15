@@ -1,7 +1,7 @@
 #include "mult_fft.hpp"
 #include"utils.hpp"
 
-#define N_FFT_TEST 4
+#define N_FFT_TEST 16
 
 void test_mult_fft(const std::array<uint64_t, N_FFT_TEST>& p1, const std::array<uint64_t, N_FFT_TEST>& p2)
 {
@@ -23,11 +23,9 @@ void test_mult_fft(const std::array<uint64_t, N_FFT_TEST>& p1, const std::array<
 
 int main()
 {
-    // make sure set N_FFT to 4 before testing
-    std::array<uint64_t,  N_FFT_TEST> p1 = {1, 2, 3, 4};
-    std::array<uint64_t,  N_FFT_TEST> p2 = {1, 3, 5, 7};
-    test_mult_fft(p1, p2);
-    p2 = {5, 6, 7, 8};
+    // make sure set N_FFT to 16 before testing
+    std::array<uint64_t,  N_FFT_TEST> p1 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
+    std::array<uint64_t,  N_FFT_TEST> p2 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 20, 21, 22, 23, 24, 25, 26};
     test_mult_fft(p1, p2);
     return 0;
 }

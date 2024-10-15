@@ -51,5 +51,5 @@ public:
     ~FFT_Processor_Spqlios();
 };
 
-constexpr uint32_t N_FFT = 4;
+constexpr uint32_t N_FFT = 16;
 extern thread_local FFT_Processor_Spqlios fftp;

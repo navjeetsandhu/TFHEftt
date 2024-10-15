@@ -1,20 +1,54 @@
 #include <array>
 #include <fft_processor_spqlios.h>
 
-inline void TwistFFT(std::array<uint64_t, N_FFT> &res, const std::array<double, N_FFT> &a);
 
-inline void TwistFFT(std::array<uint32_t, N_FFT> &res, const std::array<double, N_FFT> &a);
+template <int N>
+inline void TwistFFT(std::array<uint64_t, N> &res, const std::array<double, N> &a)
+{
+    fftp.execute_direct_torus64(res.data(), a.data());
+}
 
-inline void TwistIFFT(std::array<double, N_FFT> &res, const std::array<uint64_t, N_FFT> &a);
+template <int N>
+inline void TwistFFT(std::array<uint32_t, N> &res, const std::array<double, N> &a)
+{
+    fftp.execute_direct_torus32(res.data(), a.data());
+}
 
-inline void TwistIFFT(std::array<double, N_FFT> &res, const std::array<uint32_t, N_FFT> &a);
+template <int N>
+inline void TwistIFFT(std::array<double, N> &res, const std::array<uint64_t, N> &a)
+{
+    fftp.execute_reverse_torus64(res.data(), a.data());
+}
 
-inline void MulInFD(std::array<double, N_FFT> &res, const std::array<double, N_FFT> &b);
+template <int N>
+inline void TwistIFFT(std::array<double, N> &res, const std::array<uint32_t, N> &a)
+{
+    fftp.execute_reverse_torus32(res.data(), a.data());
+}
 
-void PolyMulFFT(std::array<uint64_t, N_FFT> &res, const std::array<uint64_t, N_FFT>  &a,
-                  const std::array<uint64_t, N_FFT>  &b);
-void PolyMulFFT(std::array<uint32_t, N_FFT>& res, const std::array<uint32_t,N_FFT> &a,
-                       const std::array<uint32_t, N_FFT> &b);
+template <int N>
+inline void MulInFD(std::array<double, N> &res, const std::array<double, N> &b)
+{
+    for (int i = 0; i < N / 2; i++) {
+        double aimbim = res[i + N / 2] * b[i + N / 2];
+        double arebim = res[i] * b[i + N / 2];
+        res[i] = std::fma(res[i], b[i], -aimbim);
+        res[i + N / 2] = std::fma(res[i + N / 2], b[i], arebim);
+    }
+}
+
+
+template <class P, int N>
+void PolyMulFFT(std::array<P, N> &res, const std::array<P, N>  &a,
+                const std::array<P, N>  &b)
+{
+    alignas(64) std::array<double, N> ffta{};
+    TwistIFFT<N>(ffta, a);
+    alignas(64) std::array<double, N> fftb{};
+    TwistIFFT<N>(fftb, b);
+    MulInFD<N>(ffta, fftb);
+    TwistFFT<N>(res, ffta);
+}
 
 
 template <class P, int N>

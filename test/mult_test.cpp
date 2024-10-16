@@ -5,7 +5,7 @@
 #include <cmath>
 
 template <int nbits>
-void test_mult_fft(const std::array<uint64_t, 1 << nbits>& p1, const std::array<uint64_t, 1 << nbits>& p2)
+void test_mult(const std::array<uint64_t, 1 << nbits>& p1, const std::array<uint64_t, 1 << nbits>& p2)
 {
 
     constexpr int N = 1 << nbits;
@@ -29,7 +29,7 @@ void test_mult_fft(const std::array<uint64_t, 1 << nbits>& p1, const std::array<
 }
 
 template <int nbits>
-void test_mult_fft(const std::array<uint32_t, 1 << nbits>& p1, const std::array<uint32_t, 1 << nbits>& p2)
+void test_mult(const std::array<uint32_t, 1 << nbits>& p1, const std::array<uint32_t, 1 << nbits>& p2)
 {
 
     constexpr int N = 1 << nbits;
@@ -53,7 +53,7 @@ void test_mult_fft(const std::array<uint32_t, 1 << nbits>& p1, const std::array<
 
 
 template <class P, int nbits>
-void test_mult_fft()
+void test_mult()
 {
     constexpr int N = 1 << nbits;
 
@@ -61,13 +61,13 @@ void test_mult_fft()
     std::array<P,  N> p2{};
     std::iota(p1.begin(), p1.end(), 1);
     std::iota(p2.begin(), p2.end(), 10);
-    test_mult_fft<nbits>(p1, p2);
+    test_mult<nbits>(p1, p2);
 }
 
 int main()
 {
     constexpr int nbit = 6;
-    test_mult_fft<uint32_t,nbit>();
-    test_mult_fft<uint64_t, nbit>();
+    test_mult<uint32_t,nbit>();
+    test_mult<uint64_t, nbit>();
     return 0;
 }

@@ -66,7 +66,7 @@ void test_mult_fft()
 
 int main()
 {
-    constexpr int nbit = 4;
+    constexpr int nbit = 6;
     test_mult_fft<uint32_t,nbit>();
     test_mult_fft<uint64_t, nbit>();
     return 0;

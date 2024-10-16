@@ -4,7 +4,7 @@
 #include "utils.hpp"
 
 
-constexpr int NBITS = 4; //dimension 64 (2^6) or 1024 (2^10) or 2048 (2^11)
+constexpr int NBITS = 6; //dimension 16 (2^4) or 1024 (2^10) or 2048 (2^11)
 constexpr int N_NTT = 1 << NBITS;
 
 inline const std::unique_ptr<const std::array<std::array<cuHEpp::INTorus, N_NTT>, 2>>

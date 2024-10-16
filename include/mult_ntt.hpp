@@ -4,7 +4,7 @@
 #include "utils.hpp"
 
 
-constexpr int NBITS = 6; //dimension 64 (2^6) or 1024 (2^10) or 2048 (2^11)
+constexpr int NBITS = 4; //dimension 64 (2^6) or 1024 (2^10) or 2048 (2^11)
 constexpr int N_NTT = 1 << NBITS;
 
 inline const std::unique_ptr<const std::array<std::array<cuHEpp::INTorus, N_NTT>, 2>>
@@ -28,7 +28,7 @@ inline void TwistINTT(std::array<cuHEpp::INTorus, 1 << nbits> &res,
 }
 
 template <class T, int nbits>
-inline void PolyMulNTT(std::array<T, 1 << nbits> &res, const std::array<T, 1 << nbits>  &a,
+void PolyMulNTT(std::array<T, 1 << nbits> &res, const std::array<T, 1 << nbits>  &a,
                     const std::array<T, 1 << nbits>  &b) {
     constexpr int N = 1 << nbits;
 
@@ -39,3 +39,5 @@ inline void PolyMulNTT(std::array<T, 1 << nbits> &res, const std::array<T, 1 << 
     for (int i = 0; i < N; i++) ntta[i] *= nttb[i];
         TwistNTT<T, nbits>(res, ntta);
 }
+
+

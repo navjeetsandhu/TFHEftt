@@ -67,3 +67,5 @@ void PolyMulNaive(std::array<T, N> &res, const std::array<T, N>  &a,
         res[i] = ri;
     }
 }
+
+

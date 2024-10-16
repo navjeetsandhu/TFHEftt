@@ -38,9 +38,9 @@ inline void MulInFD(std::array<double, N> &res, const std::array<double, N> &b)
 }
 
 
-template <class P, int N>
-void PolyMulFFT(std::array<P, N> &res, const std::array<P, N>  &a,
-                const std::array<P, N>  &b)
+template <class T, int N>
+void PolyMulFFT(std::array<T, N> &res, const std::array<T, N>  &a,
+                const std::array<T, N>  &b)
 {
     alignas(64) std::array<double, N> ffta{};
     TwistIFFT<N>(ffta, a);
@@ -51,17 +51,17 @@ void PolyMulFFT(std::array<P, N> &res, const std::array<P, N>  &a,
 }
 
 
-template <class P, int N>
-void PolyMulNaive(std::array<P, N> &res, const std::array<P, N>  &a,
-                     const std::array<P, N>  &b){
+template <class T, int N>
+void PolyMulNaive(std::array<T, N> &res, const std::array<T, N>  &a,
+                     const std::array<T, N>  &b){
     for (int i = 0; i < N; i++) {
-        P ri = 0;
+        T ri = 0;
         for (int j = 0; j <= i; j++)
-            ri += static_cast<typename std::make_signed<P>::type>(
+            ri += static_cast<typename std::make_signed<T>::type>(
                           a[j]) *
                   b[i - j];
         for (int j = i + 1; j < N; j++)
-            ri -= static_cast<typename std::make_signed<P>::type>(
+            ri -= static_cast<typename std::make_signed<T>::type>(
                           a[j]) *
                   b[N + i - j];
         res[i] = ri;

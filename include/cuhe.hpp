@@ -1,10 +1,9 @@
 #pragma once
 
 #include <array>
-#include <cassert>
 #include <cstdint>
 #include <memory>
-
+#include "c_assert.hpp"
 #include "INTorus.hpp"
 
 namespace cuHEpp {
@@ -38,11 +37,11 @@ TwistGen()
     const INTorus w = INTorus(W).Pow(1U << (32 - Nbit - 1));
     (*twist)[0][0] = (*twist)[1][0] = INTorus(1, false);
     for (uint32_t i = 1; i < N; i++) (*twist)[1][i] = (*twist)[1][i - 1] * w;
-    assert(((*twist)[1][N - 1] * w).Pow(2).value == 1);
+    c_assert(((*twist)[1][N - 1] * w).Pow(2).value == 1);
     (*twist)[0][N - 1] = (*twist)[1][N - 1] * w * w;
     for (uint32_t i = 2; i < N; i++)
         (*twist)[0][N - i] = (*twist)[0][N - i + 1] * w;
-    assert(((*twist)[0][1] * w).value == 1);
+    c_assert(((*twist)[0][1] * w).value == 1);
     return twist;
 }
 

@@ -45,13 +45,12 @@ void test_fft_ntt(const std::array<uint64_t, 1 << nbits>& p1)
     string_msg = "cuHE TwistNTT 64 bit";
     print_results<int64_t>(string_msg,  reinterpret_cast<int64_t*>(result.data()), result.size());
 
-    std::array<cuHEpp::INTorus, N> ntt1;
-    hexl::TwistINTT<uint64_t, N>(ntt1, p1);
-    copyTorusArray<N>(result1, ntt1);
+    std::fill(result1.begin(), result1.end(), 0);
+    hexl::TwistINTT<N>(result1, p1);
     string_msg = "hexl TwistINTT 64 bit";
     print_results<int64_t>(string_msg,  reinterpret_cast<int64_t*>(result1.data()), result1.size());
     std::fill(result.begin(), result.end(), 0);
-    hexl::TwistNTT<uint64_t, N>(result, ntt1);
+    hexl::TwistNTT<N>(result, result1);
     string_msg = "hexl TwistNTT 64 bit";
     print_results<int64_t>(string_msg,  reinterpret_cast<int64_t*>(result.data()), result.size());
 
@@ -89,17 +88,6 @@ void test_fft_ntt(const std::array<uint32_t, 1 << nbits>& p1)
     cuHEpp::TwistNTT<uint32_t, nbits>(result, ntt);
     string_msg = "cuHE TwistNTT 32 bit";
     print_results<int32_t>(string_msg,  reinterpret_cast<int32_t*>(result.data()), result.size());
-
-    std::array<cuHEpp::INTorus, N> ntt1;
-    hexl::TwistINTT<uint32_t, N>(ntt1, p1);
-    copyTorusArray<N>(result1, ntt1);
-    string_msg = "hexl TwistINTT 32 bit";
-    print_results<int64_t>(string_msg,  reinterpret_cast<int64_t*>(result1.data()), result1.size());
-    std::fill(result.begin(), result.end(), 0);
-    hexl::TwistNTT<uint32_t, N>(result, ntt1);
-    string_msg = "hexl TwistNTT 32 bit";
-    print_results<int32_t>(string_msg,  reinterpret_cast<int32_t*>(result.data()), result.size());
-
 }
 
 

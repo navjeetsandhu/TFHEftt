@@ -13,7 +13,7 @@ void test_mult(const std::array<uint64_t, 1 << nbits>& p1, const std::array<uint
     std::string string_msg = "Naive 64 bit Multiplication";
     print_results<uint64_t>("Input p1", p1.data(), p1.size());
     print_results<uint64_t>("Input p2", p2.data(), p1.size());
-    std::array<uint64_t, N> result = {0,0,0,0};
+    std::array<uint64_t, N> result = {};
     PolyMulNaive<uint64_t, N>(result, p1, p2);
     print_results<int64_t>(string_msg,  reinterpret_cast<int64_t*>(result.data()), result.size());
 
@@ -29,7 +29,7 @@ void test_mult(const std::array<uint64_t, 1 << nbits>& p1, const std::array<uint
     print_results<int64_t>(string_msg,  reinterpret_cast<int64_t*>(result.data()), result.size());
 
     std::fill(result.begin(), result.end(), 0);
-    hexl::PolyMulNTT<uint64_t, N>(result, p1, p2);
+    hexl::PolyMulNTT<N>(result, p1, p2);
     string_msg = "hexl NTT 64 bit Multiplication";
     print_results<int64_t>(string_msg,  reinterpret_cast<int64_t*>(result.data()), result.size());
 }
@@ -55,13 +55,6 @@ void test_mult(const std::array<uint32_t, 1 << nbits>& p1, const std::array<uint
     cuHEpp::PolyMulNTT<uint32_t, nbits>(result, p1, p2);
     string_msg = "cuHE NTT 32 bit Multiplication";
     print_results<int32_t>(string_msg,  reinterpret_cast<int32_t*>(result.data()), result.size());
-
-
-    std::fill(result.begin(), result.end(), 0);
-    hexl::PolyMulNTT<uint32_t, N>(result, p1, p2);
-    string_msg = "HEXL NTT 32 bit Multiplication";
-    print_results<int32_t>(string_msg,  reinterpret_cast<int32_t*>(result.data()), result.size());
-
 }
 
 
